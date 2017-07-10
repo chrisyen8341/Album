@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=Big5">
+<title>Test Upload File</title>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+<body>
+	<form action="uploadServlet4.do" method="post" enctype="multipart/form-data">
+		<H1>選擇多張或一張想上傳的照片</H1>
+		<input type="file" onchange='openfile(event)' name='upload' multiple id="gallery-photo-add"><br>
+		<img id="img" width="10%"><br>
+		<input type="submit" value="上傳">
+		<div class="gallery">
+		<script>
+		$(function() {
+		    // Multiple images preview in browser
+		    var imagesPreview = function(input, placeToInsertImagePreview) {
+
+		        if (input.files) {
+		            var filesAmount = input.files.length;
+
+		            for (i = 0; i < filesAmount; i++) {
+		                var reader = new FileReader();
+
+		                reader.onload = function(event) {
+		                    $($.parseHTML('<img>')).
+		                    attr(
+		                    {src: event.target.result,
+		                    width: "400px",
+		                    height: "300px"
+		                    	})
+		                    .appendTo(placeToInsertImagePreview);
+		                }
+
+		                reader.readAsDataURL(input.files[i]);
+		            }
+		        }
+
+		    };
+
+		    $('#gallery-photo-add').on('change', function() {
+		        imagesPreview(this, 'div.gallery');
+		    });
+		});
+		</script>
+	</form>
+</body>
+</html>
